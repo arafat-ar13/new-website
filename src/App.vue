@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import SideBar from './components/SideBar.vue'
 import Projects from './components/Projects.vue'
 import Experiences from './components/Experiences.vue'
@@ -27,6 +27,18 @@ const handleScroll = (event) => {
     currentPage.value--
   }
   scrollToPage(currentPage.value)
+}
+
+const handleKeyDown = (event) => {
+  if (event.key === 'ArrowDown' && currentPage.value < pages.value.length - 1) {
+    event.preventDefault()
+    currentPage.value++
+    scrollToPage(currentPage.value)
+  } else if (event.key === 'ArrowUp' && currentPage.value > 0) {
+    event.preventDefault()
+    currentPage.value--
+    scrollToPage(currentPage.value)
+  }
 }
 
 const scrollToPage = (pageIndex) => {
@@ -78,10 +90,15 @@ const generateRandomIcons = () => {
 onMounted(() => {
   pages.value = document.querySelectorAll('.page')
   window.addEventListener('wheel', handleScroll, { passive: false })
+  window.addEventListener('keydown', handleKeyDown)
   generateRandomIcons()
 })
-</script>
 
+onUnmounted(() => {
+  window.removeEventListener('wheel', handleScroll)
+  window.removeEventListener('keydown', handleKeyDown)
+})
+</script>
 
 <template>
   <div class="app-container">
@@ -92,6 +109,9 @@ onMounted(() => {
       </div>
       <div class="page page-1">
         <h1>Hello there!</h1>
+        <p class="navigation-instructions">
+          Use <i class="fas fa-arrow-down"></i> <i class="fas fa-arrow-up"></i> to move
+        </p>
       </div>
       <div class="page page-2">
         <div v-if="currentPage === 1 && !showProjects" class="project-intro">
@@ -172,5 +192,18 @@ h1, h2 {
   align-items: center;
   height: 100%;
   text-align: center;
+}
+
+.navigation-instructions {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navigation-instructions i {
+  font-size: 1.5rem;
+  margin: 0 0.5rem;
 }
 </style>
