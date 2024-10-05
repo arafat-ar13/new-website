@@ -2,17 +2,22 @@
 import { ref, onMounted } from 'vue'
 import SideBar from './components/SideBar.vue'
 import Projects from './components/Projects.vue'
+import Experiences from './components/Experiences.vue'
 
 const currentPage = ref(0)
 const pages = ref([])
 const showProjects = ref(false)
+const showExperiences = ref(false)
 const icons = ref([])
 
 const handleScroll = (event) => {
   const projectsPage = pages.value[1]
+  const experiencesPage = pages.value[2]
   const projectsContainer = projectsPage.querySelector('.projects-container')
+  const experiencesContainer = experiencesPage.querySelector('.experiences-container')
   
-  if (currentPage.value === 1 && projectsContainer.contains(event.target)) {
+  if ((currentPage.value === 1 && projectsContainer.contains(event.target)) ||
+      (currentPage.value === 2 && experiencesContainer.contains(event.target))) {
     return
   }
 
@@ -26,12 +31,18 @@ const handleScroll = (event) => {
 
 const scrollToPage = (pageIndex) => {
   pages.value[pageIndex].scrollIntoView({ behavior: 'smooth' })
+  showProjects.value = false
+  showExperiences.value = false
+  
   if (pageIndex === 1) {
     setTimeout(() => {
       showProjects.value = true
     }, 3000)
-  } else {
-    showProjects.value = false
+  } else if (pageIndex === 2) {
+    setTimeout(() => {
+      showExperiences.value = true
+      console.log('Setting showExperiences to true');
+    }, 3000)
   }
 }
 
@@ -42,7 +53,7 @@ const generateRandomIcons = () => {
     'fas fa-database', 'fas fa-wifi', 'fas fa-server', 'fas fa-sitemap'
   ]
   
-  const totalIcons = 14 // 7 icons per page, 2 pages
+  const totalIcons = 21 // 7 icons per page, 3 pages
   icons.value = []
 
   for (let i = 0; i < totalIcons; i++) {
@@ -50,7 +61,7 @@ const generateRandomIcons = () => {
     const top = Math.random() * 100
     const left = Math.random() * 100
     const rotation = Math.random() * 20 // Random rotation between 0 and 20 degrees
-    const page = i < 7 ? 0 : 1 // First 7 icons on page 0, rest on page 1
+    const page = Math.floor(i / 7) // Distribute icons evenly across 3 pages
 
     icons.value.push({
       class: randomIcon,
@@ -71,6 +82,7 @@ onMounted(() => {
 })
 </script>
 
+
 <template>
   <div class="app-container">
     <SideBar />
@@ -86,6 +98,12 @@ onMounted(() => {
           <h2>Now get ready for some quality projects...</h2>
         </div>
         <Projects v-else-if="showProjects" />
+      </div>
+      <div class="page page-3">
+        <div v-if="currentPage === 2 && !showExperiences" class="experiences-intro">
+          <h2>My Experiences</h2>
+        </div>
+        <Experiences :showExperiences="showExperiences" />
       </div>
     </div>
   </div>
@@ -123,11 +141,10 @@ h1 {
   top: 0;
   left: 0;
   right: 0;
-  height: 200vh; /* Covers exactly two pages */
+  height: 300vh; /* Covers exactly three pages */
   pointer-events: none;
   z-index: 1;
 }
-
 .icon {
   position: absolute;
   color: rgba(128, 128, 128, 0.2);
