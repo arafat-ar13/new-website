@@ -125,6 +125,9 @@ watch(currentPage, (newPage) => {
       </div>
       <div class="page page-1">
         <h1>Hello there!</h1>
+        <p class="navigation-instructions">
+          Use <i class="fas fa-arrow-down"></i> <i class="fas fa-arrow-up"></i> to move
+        </p>
       </div>
       <div class="page page-2">
         <div v-if="currentPage === 1 && !showProjects" class="project-intro">
