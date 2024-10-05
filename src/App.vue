@@ -51,11 +51,11 @@ const scrollToPage = (pageIndex) => {
   if (pageIndex === 1) {
     setTimeout(() => {
       showProjects.value = true
-    }, 3000)
+    }, 1000)
   } else if (pageIndex === 2) {
     setTimeout(() => {
       showExperiences.value = true
-    }, 3000)
+    }, 1000)
   } else if (pageIndex === 3) {
     setTimeout(() => {
       showContactIcons.value = true
@@ -131,7 +131,7 @@ watch(currentPage, (newPage) => {
       </div>
       <div class="page page-2">
         <div v-if="currentPage === 1 && !showProjects" class="project-intro">
-          <h2>Now get ready for some quality projects...</h2>
+          <h2>Look at some of my projects...</h2>
         </div>
         <Projects v-else-if="showProjects" />
       </div>
