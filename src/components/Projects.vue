@@ -29,6 +29,10 @@
 
 import languagepp from '@/assets/languagepp.png';
 import todoapp from '@/assets/todoapp.png';
+import notelifylogo from '@/assets/notelifylogo.jpg'
+import crossync from '@/assets/crossync.jpg'
+import sociall from '@/assets/sociall.png'
+import nn from '@/assets/nn.png'
 
 export default {
   name: 'Projects',
@@ -45,14 +49,22 @@ export default {
         },
         {
           id: 2,
-          title: 'Project 2',
-          description: 'Project 2 is an innovative mobile app that helps users track their fitness goals.',
-          image: '/path/to/project2-image.jpg',
-          technologies: ['React Native', 'Firebase', 'Redux'],
-          link: 'https://example.com/project2'
+          title: 'Neural Network from Scracth',
+          description: 'Made an NN completely from scratch using Python, Numpy, and math. Utilizing mini-batch gradient descent. Trained on 15,000 doodle images and tested on Google dataset. Achieved confidence of 90+%.',
+          image: nn,
+          technologies: ['Python', 'Numpy'],
+          link: 'https://github.com/arafat-ar13/NeuralNetwork'
         },
         {
           id: 3,
+          title: 'Notelify',
+          description: 'AI Notetaking application that turns your voice meetings into usable notes!',
+          image: notelifylogo,
+          technologies: ['TypeScript', 'NextJS', 'Tailwind', 'Supabase'],
+          link: 'https://notelify.co'
+        },
+        {
+          id: 4,
           title: 'Regular ToDo List',
           description: 'A full-fledged todolist web app made in Python and Django. Supports tasks, lists, attachments, notes, due dates, and an intelligent Insights feature.',
           image: todoapp,
@@ -60,28 +72,20 @@ export default {
           link: 'https://arafat13.pythonanywhere.com'
         },
         {
-          id: 4,
-          title: 'Project 4',
-          description: 'An e-commerce platform built with microservices architecture for high scalability.',
-          image: '/path/to/project4-image.jpg',
-          technologies: ['Java', 'Spring Boot', 'Docker'],
-          link: 'https://example.com/project4'
-        },
-        {
           id: 5,
-          title: 'Project 5',
-          description: 'A real-time chat application with end-to-end encryption for secure communication.',
-          image: '/path/to/project5-image.jpg',
-          technologies: ['Socket.io', 'Express.js', 'React'],
-          link: 'https://example.com/project5'
+          title: 'SociALL',
+          description: 'Manage your social media posts with AI generated captions based on your images',
+          image: sociall,
+          technologies: ['Python', 'Flask', 'Google Gemini'],
+          link: 'https://thinkedin.vercel.app/'
         },
         {
           id: 6,
-          title: 'Project 6',
-          description: 'An AI-powered image recognition system for identifying plant species.',
-          image: '/path/to/project6-image.jpg',
-          technologies: ['Python', 'OpenCV', 'Keras'],
-          link: 'https://example.com/project6'
+          title: 'Cross Sync',
+          description: 'A browser extension that syncs your browser data across multiple browsers - from Firefox to Chromium-based browsers and everything in between!',
+          image: crossync,
+          technologies: ['JavaScript', 'PostgreSQL', 'Heroku', 'Manifest v2'],
+          link: 'https://www.crosssyncapp.co/'
         }
       ]
     }

@@ -17,7 +17,7 @@
         <a href="https://github.com/arafat-ar13" target="_blank" rel="noopener noreferrer" class="icon-link">
           <i class="fab fa-github"></i>
         </a>
-        <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" class="icon-link">
+        <a href="https://www.linkedin.com/in/arafat-khan-121389tt/" target="_blank" rel="noopener noreferrer" class="icon-link">
           <i class="fab fa-linkedin"></i>
         </a>
       </div>
