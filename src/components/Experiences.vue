@@ -2,12 +2,12 @@
     <div class="experiences-container">
       <div v-show="showExperiences" class="experiences-grid">
         <div 
-          v-for="experience in experiences" 
+          v-for="(experience, index) in experiences" 
           :key="experience.id" 
           class="polaroid"
-          :style="{ transform: `rotate(${experience.rotation}deg)` }"
+          :style="{ transform: `rotate(${experience.rotation}deg)`, animationDelay: `${index * 0.5}s` }"
         >
-          <img src="../assets/my-avatar.jpg" :alt="experience.title">
+          <img :src="experience.image" :alt="experience.title">
           <div class="polaroid-caption">
             <h3>{{ experience.title }}</h3>
             <p>{{ experience.description }}</p>
@@ -18,6 +18,12 @@
   </template>
   
   <script>
+
+  import spartahack from '@/assets/spartahack.jpg'
+  import notelify from '@/assets/notelify.jpg'
+  import hiking from '@/assets/hiking.jpg'
+  import ai from '@/assets/aiclub.jpg'
+
   export default {
     name: 'Experiences',
     props: {
@@ -31,30 +37,30 @@
         experiences: [
           {
             id: 1,
-            title: 'Spartahack Winner',
-            description: 'Won the hackathon with an innovative project',
-            image: '/path/to/spartahack-image.jpg',
+            title: 'Spartahack',
+            description: 'Won Best Niche App at Spartahack 2024 as a SOLO DEVELOPER',
+            image: spartahack,
             rotation: -5
           },
           {
             id: 2,
-            title: 'Hiking Adventure',
+            title: 'Hiking',
             description: 'Explored beautiful trails and breathtaking views',
-            image: '/path/to/hiking-image.jpg',
+            image: hiking,
             rotation: 3
           },
           {
             id: 3,
-            title: 'App Competition Winner',
+            title: 'MSU AI Club App Competition',
             description: 'First place in a project app competition',
-            image: '/path/to/app-competition-image.jpg',
+            image: notelify,
             rotation: -2
           },
           {
             id: 4,
-            title: 'AI Club Leadership',
-            description: 'Led an AI club, organizing workshops and events',
-            image: '/path/to/ai-club-image.jpg',
+            title: 'MSU AI Club',
+            description: 'Led an image recognition AI Project with close to 100 students',
+            image: ai,
             rotation: 4
           }
         ]
@@ -72,6 +78,15 @@
   </script>
   
   <style scoped>
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
   .experiences-container {
     height: 100vh;
     width: 100%;
@@ -89,12 +104,14 @@
   }
   
   .polaroid {
-    background: white;
+    background: rgb(174, 172, 187);
     padding: 1rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 250px;
+    width: 350px;
     margin: 1rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
   }
   
   .polaroid:hover {
@@ -122,3 +139,5 @@
     font-size: 0.9rem;
   }
   </style>
+  
+
