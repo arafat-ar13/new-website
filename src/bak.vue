@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 import SideBar from './components/SideBar.vue'
 import Projects from './components/Projects.vue'
 import Experiences from './components/Experiences.vue'
@@ -8,7 +8,6 @@ const currentPage = ref(0)
 const pages = ref([])
 const showProjects = ref(false)
 const showExperiences = ref(false)
-const showContactIcons = ref(false)
 const icons = ref([])
 
 const handleScroll = (event) => {
@@ -30,23 +29,10 @@ const handleScroll = (event) => {
   scrollToPage(currentPage.value)
 }
 
-const handleKeyDown = (event) => {
-  if (event.key === 'ArrowDown' && currentPage.value < pages.value.length - 1) {
-    event.preventDefault()
-    currentPage.value++
-    scrollToPage(currentPage.value)
-  } else if (event.key === 'ArrowUp' && currentPage.value > 0) {
-    event.preventDefault()
-    currentPage.value--
-    scrollToPage(currentPage.value)
-  }
-}
-
 const scrollToPage = (pageIndex) => {
   pages.value[pageIndex].scrollIntoView({ behavior: 'smooth' })
   showProjects.value = false
   showExperiences.value = false
-  showContactIcons.value = false
   
   if (pageIndex === 1) {
     setTimeout(() => {
@@ -55,11 +41,8 @@ const scrollToPage = (pageIndex) => {
   } else if (pageIndex === 2) {
     setTimeout(() => {
       showExperiences.value = true
+      console.log('Setting showExperiences to true');
     }, 3000)
-  } else if (pageIndex === 3) {
-    setTimeout(() => {
-      showContactIcons.value = true
-    }, 800) // Reduced delay for faster animation
   }
 }
 
@@ -70,7 +53,7 @@ const generateRandomIcons = () => {
     'fas fa-database', 'fas fa-wifi', 'fas fa-server', 'fas fa-sitemap'
   ]
   
-  const totalIcons = 28 // 7 icons per page, 4 pages
+  const totalIcons = 21 // 7 icons per page, 3 pages
   icons.value = []
 
   for (let i = 0; i < totalIcons; i++) {
@@ -78,7 +61,7 @@ const generateRandomIcons = () => {
     const top = Math.random() * 100
     const left = Math.random() * 100
     const rotation = Math.random() * 20 // Random rotation between 0 and 20 degrees
-    const page = Math.floor(i / 7) // Distribute icons evenly across 4 pages
+    const page = Math.floor(i / 7) // Distribute icons evenly across 3 pages
 
     icons.value.push({
       class: randomIcon,
@@ -95,30 +78,14 @@ const generateRandomIcons = () => {
 onMounted(() => {
   pages.value = document.querySelectorAll('.page')
   window.addEventListener('wheel', handleScroll, { passive: false })
-  window.addEventListener('keydown', handleKeyDown)
   generateRandomIcons()
-})
-
-onUnmounted(() => {
-  window.removeEventListener('wheel', handleScroll)
-  window.removeEventListener('keydown', handleKeyDown)
-})
-
-watch(currentPage, (newPage) => {
-  if (newPage === 3) {
-    showContactIcons.value = false
-    setTimeout(() => {
-      showContactIcons.value = true
-    }, 800) // Reduced delay for faster animation
-  } else {
-    showContactIcons.value = false
-  }
 })
 </script>
 
+
 <template>
   <div class="app-container">
-    <SideBar :currentPage="currentPage" />
+    <SideBar />
     <div class="content-container">
       <div class="icon-container">
         <i v-for="(icon, index) in icons" :key="index" :class="['icon', icon.class]" :style="icon.style"></i>
@@ -137,17 +104,6 @@ watch(currentPage, (newPage) => {
           <h2>My Experiences</h2>
         </div>
         <Experiences :showExperiences="showExperiences" />
-      </div>
-      <div class="page page-4">
-        <h2>Contact Me</h2>
-        <div class="contact-icons" :class="{ 'show-icons': currentPage === 3 }">
-          <a href="https://github.com/arafat-ar13" target="_blank" rel="noopener noreferrer" class="icon-link">
-            <i class="fab fa-github"></i>
-          </a>
-          <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" class="icon-link">
-            <i class="fab fa-linkedin"></i>
-          </a>
-        </div>
       </div>
     </div>
   </div>
@@ -185,11 +141,10 @@ h1 {
   top: 0;
   left: 0;
   right: 0;
-  height: 400vh; /* Covers exactly four pages */
+  height: 300vh; /* Covers exactly three pages */
   pointer-events: none;
   z-index: 1;
 }
-
 .icon {
   position: absolute;
   color: rgba(128, 128, 128, 0.2);
@@ -199,7 +154,6 @@ h1 {
 .page {
   height: 100vh;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   scroll-snap-align: start;
@@ -218,51 +172,5 @@ h1, h2 {
   align-items: center;
   height: 100%;
   text-align: center;
-}
-
-.contact-icons {
-  display: flex;
-  justify-content: center;
-  margin-top: 30px;
-}
-
-.icon-link {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 70px;  /* Increased from 60px */
-  height: 70px; /* Increased from 60px */
-  margin: 0 20px;
-  border-radius: 50%;
-  background-color: #19b8df;
-  transition: all 0.3s ease;
-  transform: translateX(100vw);
-}
-
-.show-icons .icon-link {
-  transform: translateX(0);
-  transition: transform 0.5s ease; /* Reduced from 0.5s to 0.3s */
-}
-
-.show-icons .icon-link:nth-child(2) {
-  transition-delay: 0.1s; /* Reduced from 0.1s to 0.05s */
-}
-
-.icon-link i {
-  font-size: 40px; /* Increased from 30px */
-  color: #121212;
-}
-
-.icon-link:hover {
-  background-color: #ffffff;
-  transform: scale(1.1); /* Added a slight scale effect on hover */
-}
-
-.icon-link:hover .fa-github {
-  color: #333;
-}
-
-.icon-link:hover .fa-linkedin {
-  color: #0077B5;
 }
 </style>
