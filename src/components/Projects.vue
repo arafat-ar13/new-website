@@ -49,7 +49,7 @@ export default {
         },
         {
           id: 2,
-          title: 'Neural Network from Scracth',
+          title: 'Neural Network from Scratch',
           description: 'Made an NN completely from scratch using Python, Numpy, and math. Utilizing mini-batch gradient descent. Trained on 15,000 doodle images and tested on Google dataset. Achieved confidence of 90+%.',
           image: nn,
           technologies: ['Python', 'Numpy'],
