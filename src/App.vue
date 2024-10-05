@@ -65,7 +65,7 @@ const generateRandomIcons = () => {
     'fas fa-database', 'fas fa-wifi', 'fas fa-server', 'fas fa-sitemap'
   ]
   
-  const totalIcons = 21 // 7 icons per page, 3 pages
+  const totalIcons = 28 // 7 icons per page, 4 pages
   icons.value = []
 
   for (let i = 0; i < totalIcons; i++) {
@@ -73,7 +73,7 @@ const generateRandomIcons = () => {
     const top = Math.random() * 100
     const left = Math.random() * 100
     const rotation = Math.random() * 20 // Random rotation between 0 and 20 degrees
-    const page = Math.floor(i / 7) // Distribute icons evenly across 3 pages
+    const page = Math.floor(i / 7) // Distribute icons evenly across 4 pages
 
     icons.value.push({
       class: randomIcon,
@@ -109,9 +109,6 @@ onUnmounted(() => {
       </div>
       <div class="page page-1">
         <h1>Hello there!</h1>
-        <p class="navigation-instructions">
-          Use <i class="fas fa-arrow-down"></i> <i class="fas fa-arrow-up"></i> to move
-        </p>
       </div>
       <div class="page page-2">
         <div v-if="currentPage === 1 && !showProjects" class="project-intro">
@@ -124,6 +121,9 @@ onUnmounted(() => {
           <h2>My Experiences</h2>
         </div>
         <Experiences :showExperiences="showExperiences" />
+      </div>
+      <div class="page page-4">
+        <h2>Get in touch</h2>
       </div>
     </div>
   </div>
@@ -161,10 +161,11 @@ h1 {
   top: 0;
   left: 0;
   right: 0;
-  height: 300vh; /* Covers exactly three pages */
+  height: 400vh; /* Covers exactly four pages */
   pointer-events: none;
   z-index: 1;
 }
+
 .icon {
   position: absolute;
   color: rgba(128, 128, 128, 0.2);
@@ -192,18 +193,5 @@ h1, h2 {
   align-items: center;
   height: 100%;
   text-align: center;
-}
-
-.navigation-instructions {
-  font-size: 1.2rem;
-  margin-top: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.navigation-instructions i {
-  font-size: 1.5rem;
-  margin: 0 0.5rem;
 }
 </style>
